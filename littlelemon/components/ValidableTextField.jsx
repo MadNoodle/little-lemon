@@ -9,7 +9,9 @@ import {
 } from "react-native";
 import warningLogo from "../assets/warning.png";
 import { validateString, validateEmail } from "../Utils/Validators";
+import {theme} from "../Utils/Theme";
 
+// Configuration object that feeds a form including vdator injection and validation rules.ali
 export class TexfieldConfiguration {
   constructor(
     title,
@@ -28,13 +30,17 @@ export class TexfieldConfiguration {
   }
 }
 
+// Custom TextInput component 
+// - parameters: 
+//  configuration: TextFieldConfiguration
+//  onValidationSet: callbackMethod allowing to pass value to its parent
 export const TextField = ({ configuration, onValidationSet }) => {
   const screen = useWindowDimensions();
-  // States
+  // MARK: - States
   const [text, onChangeText] = useState("");
   const [isValid, setIsValid] = useState(false);
 
-  // Selectors
+  // MARK : -Selectors
   const handleTextChange = (inputText) => {
     onChangeText(inputText);
     switch (configuration.validator) {
@@ -55,7 +61,7 @@ export const TextField = ({ configuration, onValidationSet }) => {
     <KeyboardAvoidingView>
       <Text style={styles.text}>{configuration.title}</Text>
       <TextInput
-        style={[styles.input, { width: screen.width - 48 }]}
+        style={[styles.input, { width: screen.width - theme.spacing.l }]}
         placeholder={configuration.placeholder}
         onChangeText={handleTextChange}
         value={text}
@@ -72,36 +78,32 @@ export const TextField = ({ configuration, onValidationSet }) => {
 };
 
 const styles = StyleSheet.create({
-  text: {
-    color: "black",
-    fontSize: 20,
-    fontWeight: "500",
+  text: [theme.textVariants.subtitle, {
     textAlign: "center",
     marginBottom: 12,
-  },
+  }],
   input: {
-    borderColor: "#495E57",
-    borderRadius: 16,
+    borderColor: theme.colors.primary,
+    borderRadius: theme.radius.m,
     height: 40,
     borderWidth: 2,
     marginBottom: 5,
-    paddingHorizontal: 10,
+    paddingHorizontal: theme.spacing.s,
   },
   rulesContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 16,
+    marginBottom: theme.spacing.m,
   },
   warning: {
-    tintColor: "red",
+    tintColor: theme.colors.danger,
     width: 10,
     height: 10,
     resizeMode: "contain",
     marginRight: 5,
   },
   rules: {
-    color: "red",
-    fontSize: 12,
+    color: theme.colors.danger,
   },
 });
 

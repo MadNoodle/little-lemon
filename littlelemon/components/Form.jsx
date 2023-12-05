@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { TexfieldConfiguration, TextField } from "./ValidableTextField";
+import {theme} from "../Utils/Theme";
 
 const Form = ({ onSubmission }) => {
+
+  // MARK: - States
   const [isNameValid, setIsNameValid] = useState(false);
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
 
+  // MARK: - Form Configurations
   const nameConf = new TexfieldConfiguration(
     "First Name",
     "First Name",
@@ -26,6 +30,7 @@ const Form = ({ onSubmission }) => {
 
   const confs = [nameConf, emailConf];
 
+  // MARK: - Form Validation
   function handleNameValidity(value) {
     setIsNameValid(value);
     setIsFormValid(isNameValid && isEmailValid);
@@ -54,18 +59,17 @@ const Form = ({ onSubmission }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
-    padding: 24,
+    backgroundColor: theme.colors.background,
+    padding: theme.spacing.l,
     alignItems: "center",
   },
-  title: {
-    color: "black",
-    fontSize: 24,
-    padding: 24,
+  title: [theme.textVariants.subtitle, {
+    color: theme.colors.foreground,
+    padding: theme.spacing.l,
     textAlign: "center",
     marginBottom: 100,
     marginTop: 50,
-  },
+  }],
 });
 
 export default Form;

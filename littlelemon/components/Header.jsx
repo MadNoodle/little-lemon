@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View, Image } from "react-native";
 import logo from "../assets/logo.jpg";
+import {theme} from "../Utils/Theme";
 
 const Header = () => {
   return (
@@ -13,8 +14,8 @@ const Header = () => {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    backgroundColor: "#d9d9d9",
-    padding: 10,
+    backgroundColor: theme.colors.lightBackground,
+    padding: theme.spacing.m,
   },
   logo: {
     resizeMode: "contain",

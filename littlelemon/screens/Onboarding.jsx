@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { SafeAreaView, StyleSheet, View, Text, Pressable } from "react-native";
 import Header from "../components/Header";
 import Form from "../components/Form";
+import {theme} from "../Utils/Theme";
 
 const Onboarding = () => {
+  // MARK: - States
   const [isButtonActive, setButtonActive] = useState(false);
 
   const handleSubmission = (isValid) => {
@@ -32,39 +34,39 @@ const Onboarding = () => {
 
 const styles = StyleSheet.create({
   safe: {
-    backgroundColor: "#d9d9d9",
+    backgroundColor: theme.colors.lightBackground,
   },
   header: {
     flex: 0.1,
-    backgroundColor: "#d9d9d9",
+    backgroundColor: theme.colors.lightBackground,
   },
   formContainer: {
     flex: 0.7,
-    backgroundColor: "white",
+    backgroundColor: theme.colors.background,
   },
   footer: {
     flex: 0.2,
-    backgroundColor: "#d9d9d9",
+    backgroundColor: theme.colors.lightBackground,
   },
 
   button: {
     alignSelf: "center",
-    marginTop: 48,
-    paddingHorizontal: 30,
-    paddingVertical: 5,
-    backgroundColor: "#F4CE14",
-    borderRadius: 16,
+    marginTop: theme.spacing.xl,
+    paddingHorizontal: theme.spacing.xl,
+    paddingVertical: theme.spacing.s,
+    backgroundColor: theme.colors.secondary,
+    borderRadius: theme.spacing.m,
     position: "relative",
     
   },
-  buttonText: {
+  buttonText: [
+    theme.textVariants.cta, 
+    {
     justifyContent: "center",
     textAlign: "center",
-    fontWeight: "bold",
-    fontSize: 20,
-    color: "#495E57",
-    padding: 5,
-  },
+    color: theme.colors.primary,
+    padding: theme.spacing.s,
+  },]
 });
 
 export default Onboarding;

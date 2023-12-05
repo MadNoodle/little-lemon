@@ -1,3 +1,4 @@
+// Validates if the text is only composed of alpabetic characters
 export function validateString(str) {
     return /^[A-Za-z]*$/.test(str);
   }
