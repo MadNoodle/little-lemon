@@ -26,7 +26,7 @@ export const theme = {
   textVariants: {
     title: {
       fontFamily: "Raleway",
-      fontSize: 36,
+      fontSize: 30,
       fontWeight: "bold",
     },
     subtitle: {

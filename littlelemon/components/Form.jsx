@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     padding: theme.spacing.l,
     alignItems: "center",
   },
-  title: [theme.textVariants.subtitle, {
+  title: [theme.textVariants.title, {
     color: theme.colors.foreground,
     padding: theme.spacing.l,
     textAlign: "center",
