@@ -1,10 +1,11 @@
 const palette = {
   green: "#495E57",
-  yellow: "F4CE14",
+  yellow: "#F4CE14",
   red: "#CD0E61",
   black: "#0B0B0B",
   white: "#F0F2F3",
   grey: "#d9d9d9",
+  blue: "#434357"
 };
 
 export const theme = {
@@ -14,6 +15,7 @@ export const theme = {
     lightBackground: palette.grey,
     primary: palette.green,
     secondary: palette.yellow,
+    tertiary: palette.blue,
     danger: palette.red,
     failure: palette.red,
   },
@@ -25,29 +27,30 @@ export const theme = {
   },
   textVariants: {
     title: {
-      fontFamily: "Raleway",
       fontSize: 30,
       fontWeight: "bold",
     },
     subtitle: {
-      fontFamily: "Raleway",
       fontSize: 24,
     },
     cta: {
-      fontFamily: "Raleway",
       fontSize: 20,
       fontWeight: "bold",
     },
+    smallTitle: {
+      fontSize: 12,
+      fontWeight: 'bold',
+      color: 'grey'
+    },
     body: {
-      fontFamily: "Raleway",
       fontSize: 16,
     },
     caption: {
-      fontFamily: "Raleway",
       fontSize: 12,
     },
   },
   radius: {
+    s: 8,
     m: 16
   }
 };

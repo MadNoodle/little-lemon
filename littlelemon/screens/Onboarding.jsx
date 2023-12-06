@@ -3,13 +3,16 @@ import { SafeAreaView, StyleSheet, View, Text, Pressable } from "react-native";
 import Header from "../components/Header";
 import Form from "../components/Form";
 import {theme} from "../Utils/Theme";
+import {storeStatus} from "../Utils/Storage";
 
 const Onboarding = () => {
+
   // MARK: - States
   const [isButtonActive, setButtonActive] = useState(false);
 
   const handleSubmission = (isValid) => {
     setButtonActive(isValid);
+    console.log(isValid);
   };
 
   return (
@@ -23,7 +26,7 @@ const Onboarding = () => {
       <View style={styles.footer}>
         <Pressable
           style={styles.button}
-          onPress={isButtonActive ? () => console.log("pressed") : null}
+          onPress={isButtonActive ? () => storeStatus(true) : null}
         >
           <Text style={styles.buttonText}>Next</Text>
         </Pressable>
@@ -34,7 +37,10 @@ const Onboarding = () => {
 
 const styles = StyleSheet.create({
   safe: {
-    backgroundColor: theme.colors.lightBackground,
+    backgroundColor: theme.colors.lightBackground, 
+    flex: 1, 
+    alignItems: 'center', 
+    justifyContent: 'center'
   },
   header: {
     flex: 0.1,
@@ -46,7 +52,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     flex: 0.2,
-    backgroundColor: theme.colors.lightBackground,
+    backgroundColor: theme.colors.lightBackground
   },
 
   button: {

@@ -1,19 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native';
-import Onboarding from './screens/Onboarding';
+
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import Navigator from './Navigator/Navigator';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Onboarding />
-    </View>
+    <NavigationContainer>
+      <Navigator />
+    </NavigationContainer>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+};

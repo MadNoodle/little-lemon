@@ -8,7 +8,7 @@ import {
   useWindowDimensions,
 } from "react-native";
 import warningLogo from "../assets/warning.png";
-import { validateString, validateEmail } from "../Utils/Validators";
+import { validateString, validateEmail, isValidPhoneNumber } from "../Utils/Validators";
 import {theme} from "../Utils/Theme";
 
 // Configuration object that feeds a form including vdator injection and validation rules.ali
@@ -19,7 +19,8 @@ export class TexfieldConfiguration {
     validator,
     onValidationSet,
     rules,
-    type = "default"
+    type = "default",
+    smallFont = false
   ) {
     this.title = title;
     this.placeholder = placeholder;
@@ -27,6 +28,7 @@ export class TexfieldConfiguration {
     this.onValidationSet = onValidationSet;
     this.rules = rules;
     this.type = type;
+    this.smallFont = smallFont;
   }
 }
 
@@ -52,6 +54,10 @@ export const TextField = ({ configuration, onValidationSet }) => {
         setIsValid(validateEmail(inputText));
         onValidationSet(isValid);
         break;
+      case "phone":
+        setIsValid(isValidPhoneNumber(inputText));
+        onValidationSet(isValid);
+        break;
       default:
         setIsValid(false);
     }
@@ -59,7 +65,7 @@ export const TextField = ({ configuration, onValidationSet }) => {
 
   return (
     <KeyboardAvoidingView>
-      <Text style={styles.text}>{configuration.title}</Text>
+      <Text style={configuration.smallFont ? styles.smallTitle : styles.text}>{configuration.title}</Text>
       <TextInput
         style={[styles.input, { width: screen.width - theme.spacing.l }]}
         placeholder={configuration.placeholder}
@@ -82,6 +88,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 12,
   }],
+  smallTitle: [theme.textVariants.smallTitle],
   input: {
     borderColor: theme.colors.primary,
     borderRadius: theme.radius.m,

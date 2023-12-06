@@ -15,7 +15,7 @@ const Form = ({ onSubmission }) => {
     "First Name",
     "First Name",
     "string",
-    handleNameValidity, // Corrected prop name
+    handleNameValidity,
     "LastName should only contain letters"
   );
 
@@ -23,7 +23,7 @@ const Form = ({ onSubmission }) => {
     "E-mail",
     "e-mail",
     "email",
-    handleEmailValidity, // Corrected prop name
+    handleEmailValidity,
     "Please enter a valid e-mail address",
     "email-address"
   );

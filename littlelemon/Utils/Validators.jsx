@@ -9,3 +9,11 @@ export function validateEmail(email) {
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 return emailRegex.test(email);
 }
+
+export function isValidPhoneNumber(phoneNumber) {
+  // Define a regular expression for a US phone number with optional hyphens
+  const phoneRegex = /^(\+?1\s?)?(\(\d{3}\)|\d{3})([\s\-]?)\d{3}([\s\-]?)\d{4}$/;
+
+  // Test the provided phone number against the regex
+  return phoneRegex.test(phoneNumber);
+}
