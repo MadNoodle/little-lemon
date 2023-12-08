@@ -1,15 +1,22 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { TexfieldConfiguration, TextField } from "./ValidableTextField";
-import {theme} from "../Utils/Theme";
+import { useValidation } from "../Utils/Validators";
+import { theme } from "../Utils/Theme";
 
 const Form = ({ onSubmission }) => {
-
   // MARK: - States
-  const [isNameValid, setIsNameValid] = useState(false);
-  const [isEmailValid, setIsEmailValid] = useState(false);
-  const [isFormValid, setIsFormValid] = useState(false);
-
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [validationState, setValidation] = useValidation();
+  const isFormValid =
+    validationState.isFirstNameValid && validationState.isEmailValid;
+  const checkboxStates = {
+    orderStatus: true,
+    passwordChanges: false,
+    specialOffers: true,
+    newsletter: false,
+  };
   // MARK: - Form Configurations
   const nameConf = new TexfieldConfiguration(
     "First Name",
@@ -31,16 +38,16 @@ const Form = ({ onSubmission }) => {
   const confs = [nameConf, emailConf];
 
   // MARK: - Form Validation
-  function handleNameValidity(value) {
-    setIsNameValid(value);
-    setIsFormValid(isNameValid && isEmailValid);
-    onSubmission(isFormValid);
+  function handleNameValidity(value, text) {
+    setValidation("isFirstNameValid", value);
+    setName(text);
+    onSubmission(isFormValid, name, email, checkboxStates);
   }
 
-  function handleEmailValidity(value) {
-    setIsEmailValid(value);
-    setIsFormValid(isNameValid && isEmailValid);
-    onSubmission(isFormValid);
+  function handleEmailValidity(value, text) {
+    setValidation("isEmailValid", value);
+    setEmail(text);
+    onSubmission(isFormValid, name, email, checkboxStates);
   }
 
   return (
@@ -63,13 +70,16 @@ const styles = StyleSheet.create({
     padding: theme.spacing.l,
     alignItems: "center",
   },
-  title: [theme.textVariants.title, {
-    color: theme.colors.foreground,
-    padding: theme.spacing.l,
-    textAlign: "center",
-    marginBottom: 100,
-    marginTop: 50,
-  }],
+  title: [
+    theme.textVariants.title,
+    {
+      color: theme.colors.foreground,
+      padding: theme.spacing.l,
+      textAlign: "center",
+      marginBottom: 100,
+      marginTop: 50,
+    },
+  ],
 });
 
 export default Form;

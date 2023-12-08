@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { KeyboardAvoidingView, View } from "react-native";
 import {
   StyleSheet,
@@ -36,7 +36,7 @@ export class TexfieldConfiguration {
 // - parameters: 
 //  configuration: TextFieldConfiguration
 //  onValidationSet: callbackMethod allowing to pass value to its parent
-export const TextField = ({ configuration, onValidationSet }) => {
+export const TextField = ({ configuration, onValidationSet, value = null }) => {
   const screen = useWindowDimensions();
   // MARK: - States
   const [text, onChangeText] = useState("");
@@ -48,20 +48,28 @@ export const TextField = ({ configuration, onValidationSet }) => {
     switch (configuration.validator) {
       case "string":
         setIsValid(validateString(inputText));
-        onValidationSet(isValid);
+        onValidationSet(isValid, inputText);
         break;
       case "email":
         setIsValid(validateEmail(inputText));
-        onValidationSet(isValid);
+        onValidationSet(isValid, inputText);
         break;
       case "phone":
         setIsValid(isValidPhoneNumber(inputText));
-        onValidationSet(isValid);
+        onValidationSet(isValid, inputText);
         break;
       default:
         setIsValid(false);
     }
   };
+
+  useEffect(() => {
+    handleTextChange(value);
+    if (value) {
+      handleTextChange(value);
+    }
+  }, []);
+
 
   return (
     <KeyboardAvoidingView>
@@ -70,7 +78,7 @@ export const TextField = ({ configuration, onValidationSet }) => {
         style={[styles.input, { width: screen.width - theme.spacing.l }]}
         placeholder={configuration.placeholder}
         onChangeText={handleTextChange}
-        value={text}
+        value={value !== ''? value : text}
         keyboardType={configuration.type}
       />
       {!isValid && (

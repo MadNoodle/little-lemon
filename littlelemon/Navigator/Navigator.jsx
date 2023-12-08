@@ -5,8 +5,7 @@ import Onboarding from "../screens/Onboarding";
 import HomeScreen from "../screens/HomeScreen";
 import SplashScreen from "../screens/SplashScreen";
 import ProfileScreen from "../screens/ProfileScreen";
-import { retrieveStatus } from "../Utils/Storage";
-import ProfileImage from "../components/ProfileImage";
+import { useUser } from "../Utils/UserContext";
 import logo from "../assets/logo.jpg";
 import back from "../assets/back.png";
 import { theme } from "../Utils/Theme";
@@ -15,18 +14,23 @@ const Stack = createNativeStackNavigator();
 
 const Navigator = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [isOnboardingCompleted, setIsOnboardingCompleted] = useState(null);
+  const { user, getLoggedUser, updateUser } = useUser();
 
   useEffect(() => {
-    setIsLoading(true);
-    const checkOnBoardingStatus = async () => {
-      const isOnboardingCompleted = await retrieveStatus();
-      if (isOnboardingCompleted) {
-        setIsOnboardingCompleted(true);
+    const fetchData = async () => {
+      try {
+        setIsLoading(true);
+        const loggedUser = await getLoggedUser();
+        if (loggedUser) {
+            updateUser(loggedUser);
+        }
+      } catch (error) {
+        console.error("Error retrieving user from storage:", error);
+      } finally {
         setIsLoading(false);
       }
     };
-    checkOnBoardingStatus();
+    fetchData();
   }, []);
 
   if (isLoading) {
@@ -36,7 +40,7 @@ const Navigator = () => {
   return (
     <Stack.Navigator>
       {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
-      {isOnboardingCompleted ? (
+      {(user && user.onboardingCompleted) ? (
         <Stack.Screen
           name="Profile"
           component={ProfileScreen}
@@ -44,7 +48,7 @@ const Navigator = () => {
         />
       ) : (
         <Stack.Screen name="Onboarding" component={Onboarding} />
-      )}
+    )}
     </Stack.Navigator>
   );
 
@@ -61,16 +65,17 @@ const Navigator = () => {
             },
             styles.button,
           ]}
-          onPress={() => navigation.back}
+          onPress={() => navigation}
         >
           <Image source={back} style={styles.back} />
         </Pressable>
       ),
-      headerTitle: () => <Image source={logo} style={styles.logoHeader} />,
-      headerRight: () => <ProfileImage size={38} radius={19} />,
+      headerTitle: () => <Image source={logo} style={styles.logoHeader} />
     };
   }
 };
+
+
 
 const styles = StyleSheet.create({
   logoHeader: {

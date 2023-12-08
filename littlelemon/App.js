@@ -1,12 +1,14 @@
-
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import Navigator from './Navigator/Navigator';
+import * as React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import Navigator from "./Navigator/Navigator";
+import { UserProvider } from "./Utils/UserContext";
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Navigator />
-    </NavigationContainer>
+    <UserProvider>
+      <NavigationContainer>
+        <Navigator />
+      </NavigationContainer>
+    </UserProvider>
   );
-};
+}

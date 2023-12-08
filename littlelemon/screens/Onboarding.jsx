@@ -1,18 +1,23 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { SafeAreaView, StyleSheet, View, Text, Pressable } from "react-native";
+import { User } from "../Model/User";
 import Header from "../components/Header";
 import Form from "../components/Form";
 import {theme} from "../Utils/Theme";
-import {storeStatus} from "../Utils/Storage";
+import { useUser } from "../Utils/UserContext";
 
 const Onboarding = () => {
 
   // MARK: - States
   const [isButtonActive, setButtonActive] = useState(false);
+  const { login } = useUser();
+  const [transitionUser, setTransitionUser] = useState(null);
 
-  const handleSubmission = (isValid) => {
+  const handleSubmission = (isValid, firstname, email, notificationSettings) => {
     setButtonActive(isValid);
-    console.log(isValid);
+    if(isValid === true) {
+      setTransitionUser(new User(isValid, firstname, '', email, '', '', notificationSettings));
+    }
   };
 
   return (
@@ -26,7 +31,7 @@ const Onboarding = () => {
       <View style={styles.footer}>
         <Pressable
           style={styles.button}
-          onPress={isButtonActive ? () => storeStatus(true) : null}
+          onPress={isButtonActive ? () => login(transitionUser) : null}
         >
           <Text style={styles.buttonText}>Next</Text>
         </Pressable>

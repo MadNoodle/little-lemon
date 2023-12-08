@@ -15,6 +15,7 @@ const LemonButton = (props) => {
             styles.buttonContainer,
           ]}
           onPress={props.onPress}
+          disabled={props.disabled}
         >
           <Text style={styles.primaryButton}>{props.title}</Text>
         </Pressable>
@@ -29,6 +30,7 @@ const LemonButton = (props) => {
             styles.buttonContainer,
           ]}
           onPress={props.onPress}
+          disabled={props.disabled}
         >
           <Text style={styles.secondaryButton}>{props.title}</Text>
         </Pressable>
@@ -44,6 +46,7 @@ const LemonButton = (props) => {
           styles.tertiaryButtonContainer,
         ]}
         onPress={props.onPress}
+        disabled={props.disabled}
       >
         <Text style={styles.tertiaryButton}>{props.title}</Text>
       </Pressable>

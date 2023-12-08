@@ -6,8 +6,8 @@ import logo from '../assets/logo.jpg';
 const SpashScreen = () => {
   return (
     <View style={styles.container}>
-        <Image source={logo} />
-      <Text>Your italian restaurant</Text>
+        <Image style={styles.logo} source={logo} />
+      <Text style={styles.title}>Your italian restaurant</Text>
     </View>
   );
 };
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         width: '80%',
         resizeMode: 'contain'
     },
-    title: theme.title
+    title: theme.textVariants.title
 });
 
 export default SpashScreen;
