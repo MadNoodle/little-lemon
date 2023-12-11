@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { SafeAreaView, StyleSheet, View, Text, Pressable } from "react-native";
-import { User } from "../Model/User";
+import { User } from "../Domain/Model/User";
 import Header from "../components/Header";
 import Form from "../components/Form";
 import {theme} from "../Utils/Theme";
-import { useUser } from "../Utils/UserContext";
+import { useUser } from "../Dependencies/UserContext";
 
 const Onboarding = () => {
 

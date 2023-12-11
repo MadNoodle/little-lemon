@@ -44,6 +44,24 @@ export const ProfileImagePlaceHolder = (props) => {
   );
 };
 
+export const makeProfilePicture = (currentUser = null, selectedImage = null, size = 60) => {
+  if (currentUser && selectedImage) {
+    return <ProfileImage image={selectedImage} size={size} radius={size / 2} />;
+  } else if (currentUser && currentUser.picture === "") {
+    return (
+      <ProfileImagePlaceHolder
+        size={size} 
+        radius={size / 2}
+        firstname={currentUser.firstname}
+        lastname={currentUser.lastname}
+      />
+    );
+  } else {
+    console.log("No user loaded");
+    return null; // Return null or handle the case where no user is loaded
+  }
+};
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "lightblue",

@@ -5,7 +5,7 @@ import Onboarding from "../screens/Onboarding";
 import HomeScreen from "../screens/HomeScreen";
 import SplashScreen from "../screens/SplashScreen";
 import ProfileScreen from "../screens/ProfileScreen";
-import { useUser } from "../Utils/UserContext";
+import { useUser } from "../Dependencies/UserContext";
 import logo from "../assets/logo.jpg";
 import back from "../assets/back.png";
 import { theme } from "../Utils/Theme";
@@ -15,6 +15,31 @@ const Stack = createNativeStackNavigator();
 const Navigator = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { user, getLoggedUser, updateUser } = useUser();
+
+  const populateNavBar = ({ navigation }, hasBackButton = false) => {
+    const headerLeftComponent = hasBackButton ? (
+      <Pressable
+        style={({ pressed }) => [
+          {
+            backgroundColor: theme.colors.primary,
+            opacity: pressed ? 0.8 : 1,
+            borderRadius: 10,
+            padding: 15,
+          },
+          styles.button,
+        ]}
+        onPress={() => navigation.goBack()}
+      >
+        <Image source={back} style={styles.back} />
+      </Pressable>
+    ) : null;
+  
+    return {
+      headerLeft: () => headerLeftComponent
+    };
+  };
+  
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,48 +63,42 @@ const Navigator = () => {
   }
 
   return (
-    <Stack.Navigator>
-      {/* <Stack.Screen name="Home" component={HomeScreen} /> */}
+    <Stack.Navigator 
+    screenOptions={{
+      headerStyle: {
+        elevation: 0,
+        shadowOpacity: 0,
+      },
+      headerTitle: () => <Image source={logo} style={styles.logoHeader} />,
+    }}>
       {(user && user.onboardingCompleted) ? (
-        <Stack.Screen
-          name="Profile"
-          component={ProfileScreen}
-          options={populateNavBar()}
-        />
+        <>
+          <Stack.Screen
+            name="Home"
+            component={HomeScreen}
+            options={populateNavBar
+            }
+          />
+          <Stack.Screen
+            name="Profile"
+            component={ProfileScreen}
+            options={(props) => populateNavBar(props, true)}
+          />
+        </>
       ) : (
-        <Stack.Screen name="Onboarding" component={Onboarding} />
+        <Stack.Screen 
+          name="Onboarding" 
+          component={Onboarding} 
+          options={populateNavBar} 
+        />
     )}
     </Stack.Navigator>
   );
-
-  function populateNavBar() {
-    return {
-      headerLeft: (navigation) => (
-        <Pressable
-          style={({ pressed }) => [
-            {
-              backgroundColor: theme.colors.primary,
-              opacity: pressed ? 0.8 : 1,
-              borderRadius: 10,
-              padding: 15,
-            },
-            styles.button,
-          ]}
-          onPress={() => navigation}
-        >
-          <Image source={back} style={styles.back} />
-        </Pressable>
-      ),
-      headerTitle: () => <Image source={logo} style={styles.logoHeader} />
-    };
-  }
 };
-
-
 
 const styles = StyleSheet.create({
   logoHeader: {
-    width: 120,
+    width: 100,
     height: 40,
     resizeMode: "contain",
   },

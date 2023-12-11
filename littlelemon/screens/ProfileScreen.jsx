@@ -1,16 +1,13 @@
 import { useState, useEffect } from "react";
-import { StyleSheet, View, Text, ScrollView, Platform } from "react-native";
+import { StyleSheet, View, Text, ScrollView, Platform, Pressable } from "react-native";
 import {
   TexfieldConfiguration,
   TextField,
 } from "../components/ValidableTextField";
 import LemonButton from "../components/LemonButton";
 import Check from "../components/Check";
-import {
-  ProfileImage,
-  ProfileImagePlaceHolder,
-} from "../components/ProfileImage";
-import { useUser } from "../Utils/UserContext";
+import { makeProfilePicture} from "../components/ProfileImage";
+import { useUser } from "../Dependencies/UserContext";
 import { useValidation } from "../Utils/Validators";
 import { theme } from "../Utils/Theme";
 import * as ImagePicker from 'expo-image-picker';
@@ -149,7 +146,7 @@ const ProfileScreen = ({navigation}) => {
           setInitialUser(user)
           setImage(user.picture);
           setIsLoading(false);
-          makeProfilePicture(image);
+          makeProfilePicture(user,image);
         }
       } catch (error) {
         console.error("Error retrieving user from storage:", error);
@@ -164,55 +161,37 @@ const ProfileScreen = ({navigation}) => {
   function handleProfilePicture() {
     navigation.setOptions({
         headerRight: () => (
-          makeProfilePicture(image, 38)
+          makeProfilePicture(currentUser, image, 38)
         ),
       });
-      return makeProfilePicture(image);
+      return makeProfilePicture(currentUser, image);
     }
 
-  function makeProfilePicture(selectedImage = null, size = 60) {
-    if (currentUser && selectedImage) {
-      return <ProfileImage image={selectedImage} size={size} radius={size / 2} />;
-    } else if (currentUser && currentUser.picture === "") {
-      return (
-        <ProfileImagePlaceHolder
-            size={size} 
-            radius={size / 2}
-          firstname={currentUser.firstname}
-          lastname={currentUser.lastname}
-        />
-      );
-    } else {
-      console.log("No user loaded");
-      return null; // Return null or handle the case where no user is loaded
-    }
-  };
-
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.canceled) {
+    const pickImage = async () => {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+    
+      if (!result.canceled) {
         const selectedImage = result.assets[0].uri;
-        
-        // Update the currentUser only if it exists
-        if (currentUser) {
-            setImage(selectedImage);
-            navigation.setOptions({
-            headerRight: () => (
-              makeProfilePicture(selectedImage, 38)
-            ),
-          });
-        }
-        
-        
+    
+        // Update the state directly
+        setImage(selectedImage);
+        currentUser.picture = selectedImage;
+    
+        // Update navigation options
+        navigation.setOptions({
+          headerRight: () => (
+            <Pressable onPress={() => navigation.navigate('Profile')}>
+              {makeProfilePicture(currentUser, selectedImage, 38)}
+            </Pressable>
+          ),
+        });
       }
-  };
+    };
 
   const discardChanges = () => {
     setCurrentUser(initialUser);
@@ -246,7 +225,7 @@ const ProfileScreen = ({navigation}) => {
             updateUser(currentUser);
             navigation.setOptions({
                 headerRight: () => (
-                  makeProfilePicture(38)
+                  makeProfilePicture(currentUser,38)
                 ),
               });
         }} />

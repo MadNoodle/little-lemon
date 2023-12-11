@@ -30,6 +30,11 @@ export const theme = {
       fontSize: 30,
       fontWeight: "bold",
     },
+    whiteTitle: {
+      color: 'white',
+      fontSize: 30,
+      fontWeight: "bold",
+    },
     subtitle: {
       fontSize: 24,
     },

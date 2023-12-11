@@ -63,13 +63,11 @@ export const TextField = ({ configuration, onValidationSet, value = null }) => {
     }
   };
 
-  useEffect(() => {
+useEffect(() => {
+  if (value !== undefined && value !== null) {
     handleTextChange(value);
-    if (value) {
-      handleTextChange(value);
-    }
-  }, []);
-
+  }
+}, [value]);
 
   return (
     <KeyboardAvoidingView>

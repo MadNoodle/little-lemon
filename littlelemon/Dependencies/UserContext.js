@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import { getUser, saveUser } from '../Utils/Storage'; // Replace with your actual storage functions
+import { getUser, saveUser } from '../Services/StorageService'; 
 
 const UserContext = createContext();
 
@@ -8,17 +8,17 @@ export const UserProvider = ({ children }) => {
 
   const login = async (userData) => {
     setUser(userData);
-    await saveUser(userData); // Assuming setUser is a storage function to save user data
+    await saveUser(userData); 
   };
 
   const logout = async () => {
     setUser(null);
-    await saveUser(null); // Clear user data from storage on logout
+    await saveUser(null); 
   };
 
   const getLoggedUser = async () => {
     try {
-      const storedUser = await getUser(); // Replace with your actual storage function
+      const storedUser = await getUser(); 
       return storedUser;
     } catch (error) {
       console.error('Error retrieving user from storage:', error);
@@ -28,7 +28,7 @@ export const UserProvider = ({ children }) => {
 
   const updateUser = async (updatedUser) => {
     saveUser(updatedUser);
-    await saveUser(updatedUser); // Update user data in storage
+    await saveUser(updatedUser);
   };
 
   useEffect(() => {
