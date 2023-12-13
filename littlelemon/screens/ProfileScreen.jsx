@@ -126,37 +126,47 @@ const ProfileScreen = ({navigation}) => {
   }
 
 
+useEffect(() => {
+  let isMounted = true;
 
-  useEffect(() => {    
-    const requestPermission = async () => {
-        if (Platform.OS !== 'web') {
-            const {status} = await ImagePicker.requestMediaLibraryPermissionsAsync();
-            if (status !== 'granted') {
-                alert('Permission Denied')
-            };
-        }
+  const requestPermission = async () => {
+    if (Platform.OS !== 'web') {
+        const {status} = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+            alert('Permission Denied')
+        };
     }
-    
-    const loadProfile = async () => {
-      try {
-        setIsLoading(true);
-        const user = await getLoggedUser();
-        if (user) {
-          setCurrentUser(user);
-          setInitialUser(user)
-          setImage(user.picture);
-          setIsLoading(false);
-          makeProfilePicture(user,image);
-        }
-      } catch (error) {
-        console.error("Error retrieving user from storage:", error);
-        // Handle the error appropriately
+}
+
+  const loadProfile = async () => {
+    try {
+      setIsLoading(true);
+      const user = await getLoggedUser();
+
+      if (isMounted) {
+        setCurrentUser(user);
+        setInitialUser(user);
+        setImage(user.picture);
+        makeProfilePicture(user, image);
         setIsLoading(false);
       }
-    };
-    requestPermission();
-    loadProfile();
-  }, []);
+    } catch (error) {
+      console.error("Error retrieving user from storage:", error);
+
+      if (isMounted) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  requestPermission();
+  loadProfile();
+
+  return () => {
+    isMounted = false;
+  };
+}, []);
+
 
   function handleProfilePicture() {
     navigation.setOptions({
@@ -180,7 +190,10 @@ const ProfileScreen = ({navigation}) => {
     
         // Update the state directly
         setImage(selectedImage);
-        currentUser.picture = selectedImage;
+        setCurrentUser((prevUser) => ({
+          ...prevUser,
+          picture: selectedImage,
+        }));
     
         // Update navigation options
         navigation.setOptions({

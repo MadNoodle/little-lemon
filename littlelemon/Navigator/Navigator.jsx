@@ -38,8 +38,6 @@ const Navigator = () => {
       headerLeft: () => headerLeftComponent
     };
   };
-  
-  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,8 +74,7 @@ const Navigator = () => {
           <Stack.Screen
             name="Home"
             component={HomeScreen}
-            options={populateNavBar
-            }
+            options={populateNavBar}
           />
           <Stack.Screen
             name="Profile"

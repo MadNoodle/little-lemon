@@ -139,7 +139,7 @@ const HomeScreen = ({ navigation }) => {
         </ScrollView>
       </View>
       <FlatList
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.name}
         style={styles.list}
         data={menu}
         renderItem={renderItem}
