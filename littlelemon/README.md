@@ -12,7 +12,7 @@ Welcome to the **Little Lemon Online Food Ordering App** – your ultimate solut
 - **Customized Profiles**: Create and manage your personal profile within the app. Save favorite orders, delivery addresses, and payment preferences for a personalized experience.
 
 ## Wireframe
-![Alt wireframe](https://github.com/MadNoodle/little-lemon/blob/main/Little_lemon.png?raw=true)
+![wireframe](https://github.com/MadNoodle/little-lemon/blob/main/Little_lemon.png)
 
 ## Getting Started
 
