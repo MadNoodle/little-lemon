@@ -113,7 +113,7 @@ const filterByNameAndCategory = (query, activeCategories) => {
         return new Promise((resolve, reject) => {
             db.transaction((tx) => {
               tx.executeSql(
-                  `SELECT * FROM menu_items WHERE name LIKE ? AND category IN (${categoriesString})`,
+                `SELECT * FROM menu_items WHERE name LIKE '%' || ? || '%' AND category IN (${categoriesString})`,
                   [`%${query}%`, ...activeCategories],
                 (_, { rows }) => {
                   const resultArray = toObject(rows);
