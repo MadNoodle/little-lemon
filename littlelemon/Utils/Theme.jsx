@@ -38,6 +38,20 @@ export const theme = {
     subtitle: {
       fontSize: 24,
     },
+    headline: {
+      fontSize: 20,
+      fontWeight: '500'
+    },
+    description: {
+      fontSize: 20,
+      fontWeight: '400',
+      color: palette.green
+    },
+    price: {
+      fontSize: 20,
+      fontWeight: '700',
+      color: palette.green
+    },
     cta: {
       fontSize: 20,
       fontWeight: "bold",

@@ -13,19 +13,3 @@ export class MenuSection {
     this.dishes = dishes;
   }
 }
-
-export class MenuResponse {
-  constructor(menu = []) {
-    this.menu = menu;
-  }
-}
-
-export class DishResponse {
-  constructor(name, price, description, image, category) {
-    this.name = name;
-    this.price = price;
-    this.description = description;
-    this.image = image;
-    this.category = category;
-  }
-}

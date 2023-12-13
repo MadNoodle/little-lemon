@@ -4,7 +4,6 @@ export const saveUser = async (user) => {
   try {
     const userString = JSON.stringify(user);
     await AsyncStorage.setItem("user", userString);
-    console.log(userString);
     console.log("User saved successfully!");
   } catch (error) {
     console.error("Error saving user to AsyncStorage:", error);
@@ -45,5 +44,31 @@ export const clearUser = async () => {
     console.log("User data cleared successfully!");
   } catch (error) {
     console.error("Error clearing user data from AsyncStorage:", error);
+  }
+};
+
+export const saveMenu = async (menu) => {
+  try {
+    const menuString = JSON.stringify(menu);
+    await AsyncStorage.setItem("menu", menuString);
+    console.log("Menu saved successfully!");
+  } catch (error) {
+    console.error("Error saving menu to AsyncStorage:", error);
+  }
+};
+
+export const getStoredMenu = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem("menu");
+
+    if (jsonValue !== null) {
+      const menu = JSON.parse(jsonValue);
+      return menu;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error("Error retrieving Menu from AsyncStorage:", error);
+    return null;
   }
 };
